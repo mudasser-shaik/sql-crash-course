@@ -1,0 +1,22 @@
+# image : https://hub.docker.com/_/mysql
+version: "3.2"
+services:
+  db:
+    container_name: mysql
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'user1'
+      MYSQL_PASSWORD: 'S0meVeryHardPassword'
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - '3306:3306'
+    expose: # Opens port 3306 on the container
+      - '3306'
+#     command: /bin/sh -c "load-database.sh"
+    volumes: # Where our data will be persisted
+      - data-mysql-db:/var/lib/mysql
+# Names our volume
+volumes:
+  data-mysql-db:
