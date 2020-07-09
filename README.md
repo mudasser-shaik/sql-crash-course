@@ -65,12 +65,12 @@ You can also run commands without a interactive mode.
 
 > $ docker exec ${CONTAINER_NAME} mysql -u ${USER_NAME} -p${PASSWORD} -e "${SQL_Statement}"
 ```shell script
-docker exec mysql mysql -u user -pS0meVeryHardPassword -e "show databases;"
+docker exec mysql mysql -u user1 -pS0meVeryHardPassword -e "show databases;"
 ```
 
 #### Restoring data from dump files
 In this course we will be using MySQL Sample Database [classicmodels](http://www.mysqltutorial.org/mysql-sample-database.aspx)
-> docker exec -i mysql sh -c 'exec mysql -u user -pS0meVeryHardPassword' < mysqlsampledatabase.sql
+> docker exec -i mysql sh -c 'exec mysql -u user1 -pS0meVeryHardPassword' < mysqlsampledatabase.sql
 
 Other Sample Data to Work with - [Employee Sample Database](https://dev.mysql.com/doc/employee/en/)
 
