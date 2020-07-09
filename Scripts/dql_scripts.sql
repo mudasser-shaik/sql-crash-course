@@ -24,17 +24,18 @@ SELECT productLine, productName from products order by productLine ASC, productN
 SELECT customerName , phone , city from customers where city <> 'Melbourne';
 
 # Select name and phone number of customer who are from ‘Melbourne’
-SELECT city , phone from customers  where city='Melbourne';
+SELECT customerName , phone, city from customers  where city='Melbourne';
 
 # “I need to know which customer bought the vehicles for the following 2005 dates: May 18, April 03, and May 30.”
 describe customers;
-SELECT orderNumber, orderDate FROM orders WHERE orderDate IN ('2005-05-18', '2005-04-03','2005-05-30')
+SELECT orderNumber, customerNumber, orderDate FROM orders WHERE orderDate IN ('2005-05-18', '2005-04-03','2005-05-30');
 
 # “Show me a list of all the orders we’ve taken, except for those posted in October.”
 # Select order number and order date from the orders table where the order date does not fall between October 1, 2004, and October 31, 2004
-SELECT orderNumber , orderDate from orders where orderDate NOT BETWEEN '2004-10-01' AND '2004-10-31'
+SELECT orderNumber , orderDate from orders where orderDate NOT BETWEEN '2004-10-01' AND '2004-10-31';
 
 # “Which customer do not yet have a assigned with the Sales Representative ? ”
+# select a customers from customers table whose salesRepEmployeeNumber is empty
 SELECT customerName from customers where salesRepEmployeeNumber IS NULL;
 
 # “I need the identification numbers of all people working in the company who are not VPs ”
@@ -44,8 +45,9 @@ SELECT employeeNumber from employees where jobTitle NOT IN ('VP Sales','VP Marke
 SELECT employeeNumber from employees where jobTitle NOT LIKE '%VP%' ;
 
 # “How many customers were able to indicate which county they live in?”
-SELECT COUNT(city) as NumberOfKnownCountries FROM customers;
-SELECT 'The number of known customer countries: ', COUNT(city) from customers;
+SELECT COUNT(country) as NumberOfKnownCountries FROM customers;
+SELECT COUNT(DISTINCT(country)) as NumberOfKnownCountries FROM customers;
+SELECT 'The number of known customer countries: ', COUNT(country) from customers;
 
 # “Show me the total number of Melbourne employees we have in our company.”
 SELECT COUNT(*) FROM employees;
@@ -59,11 +61,11 @@ SELECT COUNT(DISTINCT city) AS NumberOfUniqueCities FROM customers WHERE country
 
 # “How much is our current inventory worth?”
 # Select the sum of buy price times quantity on hand as TotalInventoryValue from the products table
-SELECT SUM(buyPrice * quantityInStock) AS TotalInventoryValue FROM products;
+SELECT SUM(MSRP * quantityInStock) AS TotalInventoryValue FROM products;
 
 # “Calculate a total of all unique sale costs for the products we sell.”
 # Select the sum of unique product costs as SumOfUniqueSaleCosts from the OrderDetails table
-SELECT SUM(DISTINCT buyPrice)  AS SumOfUniqueSaleCosts FROM products;
+SELECT SUM(DISTINCT priceEach)  AS SumOfUniqueSaleCosts FROM orderdetails;
 
 # “What is the average item total for order 10101?”
 # Select the average of price times quantity ordered as AverageItemTotal from the order details table where order ID is 10101
@@ -76,8 +78,8 @@ SELECT AVG(DISTINCT priceEach) AS UniqueProductPrices FROM orderdetails;
 
 # “What is the lowest wholesale price we charge for a product?”
 # Select the minimum wholesale price as LowestProductPrice from the products table
-SELECT MIN(buyPrice) AS LowestProductPrice FROM products;
-SELECT MAX(buyPrice) AS LowestProductPrice FROM products;
+SELECT MIN(MSRP) AS LowestProductPrice FROM products;
+SELECT MAX(MSRP) AS LowestProductPrice FROM products;
 
 # “How many different products were ordered on order number 10101, and what was the total cost of that order?”
 # Select the unique count of product ID as TotalProductsPurchased and the sum of price times quantity ordered as OrderAmount from the order details table where the order number is 553
@@ -93,5 +95,6 @@ FROM orderdetails WHERE orderNumber = 10101;
 # Steps
 #      1 - calculate the overall average retail price manually and then plug that specific SQL Query into a comparison predicate
 #      2 - Select the product name from the products table where the retail price is less than or equal to the overall average retail price in the products table
-SELECT productName FROM products WHERE buyPrice <= 196.03;
-SELECT productName FROM products WHERE buyPrice <= (SELECT AVG(buyPrice) FROM products);
+SELECT AVG(MSRP) FROM products;
+SELECT productName FROM products WHERE MSRP <= 100.438727;
+SELECT productName FROM products WHERE MSRP <= (SELECT AVG(MSRP) FROM products);
