@@ -6,6 +6,7 @@ SQL has become the de-facto language for Data Manipulations not only in DBMS but
 
 This course will take you on a journey where you'll establish the strongest possible foundation in database development by learning 
 * How to use MySQL (the most popular open source database) 
+* Proficiency in basic SQL operators including WHERE, GROUP BY, INNER JOIN, and LEFT JOIN
 * How to Convert the complex problem statements into SQL queries.
 * Write queries efficiently for production.
 * Create reports.
